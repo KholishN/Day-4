@@ -40,29 +40,20 @@ let dataCard=[];
 
 function addProject(){
 
-    let checkbox = document.querySelectorAll("input[type=checkbox]:checked")
-    let output = [];
+  
     let  title = document.getElementById("input-name").value;
-    let  image = document.getElementById("input-image").files[0];
+    let  image = URL.createObjectURL(document.getElementById("input-image").files[0]);
     let  author= "Kholish Nurfajri";
     let  content= document.getElementById("description").value;
-    let  start=new Date(document.getElementById("project-start").value);
-    let  end=new Date(document.getElementById("project-end").value);
-    let  duration = difference(start, end);
-    let  date = `${start.getDate()} ${month[start.getMonth()]} ${start.getFullYear()} - ${end.getDate()} ${month[end.getMonth()]} ${end.getFullYear()}`;
-   image =URL.createObjectURL(image)
-    
-
-   checkbox.forEach((checkbox) => {output.push(checkbox.value)});
+    let  date = new Date()
+;
 
 
     let project = {
         title : title,
         image : image,
         author : author,
-        duration:duration<30 ? duration+" hari" : parseInt(duration/30)+" bulan",
         date : date,
-        checkbox: output,
         content: content
     
     
@@ -88,16 +79,19 @@ function renderPage(){
         cardProject.innerHTML =`<a href="detail-project.html" class="card-grid">,
         <img src="${data.image}"</a>
         <p class="card-title">${data.title}</p>
-        </a>
-        <p class="card-durasi">${data.duration} </p>
+        <p class="card-durasi">3 Bulan </p>
         <p class="card-description">${data.content}</p>
-        <div class="card-technologies">${data.checkbox.toString().replaceAll(',',' ')}
+        <div class="card-technologies">
+        <i class="fa-brands fa-html5"></i>
+        <i class="fa-brands fa-js"></i>
+        <i class="fa-brands fa-css3-alt"></i>
+        <i class="fa-solid fa-forward-fast"></i>
         </div>
         <div style=" display: flex;">
         <button onclick="edit(${index})" class="butom-action" style="margin-right: 10px;">Edit</button>
         <button onclick="hapus(${index})" class="butom-action">Hapus</button>
         </div>
-        `
+        </a>`
     })
 }
 
@@ -107,11 +101,4 @@ function edit(index){
 
     function hapus(index){
         console.log(index);
-    }
-
-    function difference(date1, date2) {  
-        const date1utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
-        const date2utc = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
-          day = 1000*60*60*24;
-        return(date2utc - date1utc)/day
     }
